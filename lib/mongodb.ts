@@ -8,7 +8,7 @@ const MONGODB_URI = process.env.MONGODB_URI!
 
 // Fail fast if the MongoDB connection string is missing
 if (!MONGODB_URI) {
-  throw new Error('Missing MONGODB_URI')
+    throw new Error('Missing MONGODB_URI')
 }
 
 /**
@@ -17,7 +17,7 @@ if (!MONGODB_URI) {
  * In development mode, Next.js may reload modules multiple times.
  * This cache prevents creating multiple MongoDB connections.
  */
-let cached = (global as any).mongoose || { conn: null, promise: null }
+const cached = (global as any).mongoose || { conn: null, promise: null }
 
 /**
  * Connect to MongoDB using Mongoose.
@@ -29,10 +29,10 @@ let cached = (global as any).mongoose || { conn: null, promise: null }
  * @returns The active Mongoose connection
  */
 export async function connectDB() {
-  if (cached.conn) return cached.conn
+    if (cached.conn) return cached.conn
 
-  if (!cached.promise) cached.promise = mongoose.connect(MONGODB_URI).then(mongoose => mongoose)
+    if (!cached.promise) cached.promise = mongoose.connect(MONGODB_URI).then(mongoose => mongoose)
 
-  cached.conn = await cached.promise
-  return cached.conn
+    cached.conn = await cached.promise
+    return cached.conn
 }

@@ -1,43 +1,95 @@
-# 🔗 Link Shortener
+# Link Shortener
 
-A modern, fast, and minimal **URL shortener** built with **Next.js App Router**, **MongoDB**, and **HeroUI**.  
-Designed to be production-ready, easy to maintain, and simple to deploy on **Vercel**.
+<p align="center">
+  <img src="./app/image.png" alt="Link Shortener preview" width="860" />
+</p>
 
----
+A minimal URL shortener built with Next.js App Router and MongoDB. Paste a long URL, generate a short code, and use dynamic routing to redirect instantly.
 
-## ✨ Features
+> [!NOTE]
+> This project uses **Server Actions** for URL creation and **MongoDB (Mongoose)** for link storage.
 
-- 🔗 Shorten long URLs into clean, shareable links
-- ⚡ Instant redirect using dynamic routes
-- 🧠 Server Actions (no REST API boilerplate)
-- 🗄️ MongoDB with Mongoose
-- ⏳ Optional link expiration (TTL-ready)
-- 🎨 Clean UI with HeroUI
-- 🔔 Toast notifications
-- 📋 One-click copy
-- 🌙 Dark mode friendly
-- 🚀 Optimized for Vercel deployment
+## Features
 
----
+- Shorten long URLs into compact shareable links
+- Redirect from `/{code}` to the original URL
+- Clean UI with HeroUI components
+- Toast feedback for success and failure states
+- CI workflow for lint and build on push/PR to `main`
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-- **Framework:** Next.js 16 (App Router)
-- **Language:** TypeScript
-- **UI:** HeroUI + Tailwind CSS
-- **Database:** MongoDB (Mongoose)
-- **Animations:** Framer Motion
-- **Icons:** Lucide React
-- **Validation:** validator
-- **ID Generator:** nanoid
+- Next.js 16 (App Router)
+- React 19 + TypeScript
+- HeroUI + Tailwind CSS v4
+- MongoDB + Mongoose
+- nanoid
 
----
+## Project Structure
 
-## 📄 License
+```text
+app/                Next.js pages and routes
+app/[code]/page.tsx Dynamic redirect route
+components/         UI components for form/result
+services/shorten.ts Server Action to create short URLs
+models/Link.ts      MongoDB schema
+lib/mongodb.ts      MongoDB connection helper
+```
 
-MIT © 2026 Khanh Nguyen
+## Getting Started
 
-## 👤 Author
+### Prerequisites
 
-Khanh Nguyen
-📧 knguyen1411b@gmail.com
+- Node.js 20+
+- pnpm 9+
+- A MongoDB connection string
+
+### 1. Install dependencies
+
+```bash
+pnpm install
+```
+
+### 2. Configure environment
+
+Create `.env` in the project root:
+
+```env
+MONGODB_URI=your-mongodb-connection-string
+```
+
+### 3. Start development server
+
+```bash
+pnpm dev
+```
+
+Open http://localhost:3000.
+
+## Available Scripts
+
+- `pnpm dev`: Run local dev server
+- `pnpm build`: Build for production
+- `pnpm start`: Run production server
+- `pnpm lint`: Run ESLint
+- `pnpm format`: Format files with Prettier
+
+## How It Works
+
+1. User submits a URL from the homepage form.
+2. `shortenUrl()` generates a 7-character code with `nanoid`.
+3. The mapping is stored in MongoDB (`originalUrl` + `shortCode`).
+4. Accessing `/{code}` looks up the record and redirects to the original URL.
+
+## Deployment
+
+Deploy on Vercel (recommended).
+
+Set `MONGODB_URI` in your deployment environment before running the app.
+
+## Support Files
+
+- Contribution guide: [CONTRIBUTING.md](./CONTRIBUTING.md)
+- Security policy: [SECURITY.md](./SECURITY.md)
+- Code of conduct: [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
+- License: [LICENSE](./LICENSE)

@@ -1,9 +1,11 @@
 'use server'
 
-import { connectDB } from '@/app/_lib/mongodb'
 import { headers } from 'next/headers'
-import Link from '@/app/_model/Link'
+
 import { nanoid } from 'nanoid'
+
+import { connectDB } from '@/lib/mongodb'
+import Link from '@/models/Link'
 
 /**
  * Get the base URL of the current request.
@@ -16,9 +18,9 @@ import { nanoid } from 'nanoid'
  * - Do NOT use `await` with `headers()`
  */
 const getBaseUrl = async () => {
-  const h = await headers()
+    const h = await headers()
 
-  return `${h.get('x-forwarded-proto') ?? 'http'}://${h.get('x-forwarded-host') ?? h.get('host')}`
+    return `${h.get('x-forwarded-proto') ?? 'http'}://${h.get('x-forwarded-host') ?? h.get('host')}`
 }
 
 /**
@@ -37,15 +39,15 @@ const getBaseUrl = async () => {
  * @returns The full shortened URL (e.g. https://domain.com/abc123)
  */
 export const shortenUrl = async (url: string, demoMode: boolean = false) => {
-  await connectDB()
+    await connectDB()
 
-  const shortCode = nanoid(7)
+    const shortCode = nanoid(7)
 
-  if (!demoMode)
-    await Link.create({
-      originalUrl: url,
-      shortCode
-    })
+    if (!demoMode)
+        await Link.create({
+            originalUrl: url,
+            shortCode
+        })
 
-  return `${await getBaseUrl()}/${shortCode}`
+    return `${await getBaseUrl()}/${shortCode}`
 }

@@ -11,11 +11,11 @@ import mongoose from 'mongoose'
  * fields to each document.
  */
 const LinkSchema = new mongoose.Schema(
-  {
-    originalUrl: { type: String, required: true },
-    shortCode: { type: String, required: true, unique: true }
-  },
-  { timestamps: true }
+    {
+        originalUrl: { type: String, required: true },
+        shortCode: { type: String, required: true, unique: true }
+    },
+    { timestamps: true }
 )
 
 /**

@@ -1,6 +1,7 @@
 import { notFound, redirect } from 'next/navigation'
-import { connectDB } from '@/app/_lib/mongodb'
-import Link from '@/app/_model/Link'
+
+import { connectDB } from '@/lib/mongodb'
+import Link from '@/models/Link'
 
 // Props type definition
 type Props = { params: Promise<{ code: string }> }
@@ -15,11 +16,11 @@ type Props = { params: Promise<{ code: string }> }
  * This runs on the server (Node.js runtime).
  */
 export default async function RedirectPage({ params }: Props) {
-  await connectDB()
+    await connectDB()
 
-  const link = await Link.findOne({ shortCode: (await params).code })
+    const link = await Link.findOne({ shortCode: (await params).code })
 
-  if (!link) return notFound()
+    if (!link) return notFound()
 
-  redirect(link.originalUrl)
+    redirect(link.originalUrl)
 }
