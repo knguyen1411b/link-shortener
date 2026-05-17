@@ -7,7 +7,7 @@ import mongoose from 'mongoose'
 const MONGODB_URI = process.env.MONGODB_URI!
 
 // Fail fast if the MongoDB connection string is missing
-if (!MONGODB_URI) {
+if (!MONGODB_URI && process.env.NODE_ENV !== 'production') {
     throw new Error('Missing MONGODB_URI')
 }
 
